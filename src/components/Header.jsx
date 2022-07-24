@@ -8,12 +8,13 @@ class Header extends Component {
       <Container>
         <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
           <Container>
-            <Navbar.Brand href="#home">MARS (Magical Acoustic Room System)</Navbar.Brand>
+            <Navbar.Brand href="#home">frontend</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="justify-content-end" style={{ width: "100%" }}>
                 <Nav.Link href="/">Home</Nav.Link>
                 <Nav.Link href="/about">About</Nav.Link>
+                <Nav.Link href = '/spiderbot_ui'>SpiderBot UI</Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Container>

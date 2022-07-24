@@ -24,8 +24,18 @@
   color: white;
 }
 
+.Canvas {
+  width: 936.016px;
+  height: 550px;
+
+}
+.NodeList {
+  border: 2px black;
+  float: right;
+
+}
 .App-link {
-  color: #61dafb;
+  color: #364144;
 }
 
 @keyframes App-logo-spin {

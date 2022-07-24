@@ -1,0 +1,25 @@
+.NodeList {
+    border:  rgb(2, 6, 8);
+    float: right;
+    position:absolute;
+    right:150px;
+    top:150px;
+  
+  }
+
+.SpiderCanvas {
+    position: relative;
+}
+
+.Canvas {
+    position:absolute;
+    left:0;
+    top:0;
+}
+
+.table-header {
+    background-color: #7aa0a2;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
