@@ -18,7 +18,7 @@ import { Canvas, useFrame, transientUpdate } from "@react-three/fiber";
 // import { OrbitControls } from "@react-three/drei";
 import { Nodes, Node } from "./Nodes";
 
-// import { Row, Col, Container, Button } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import create from "zustand";
 
 const Store = create((set) => ({
@@ -88,19 +88,20 @@ const useStore = create((set) => ({
 // //     )
 // //   }
 
-const Scene = () => {
+const Scene = (props) => {
   let data = [1, 0.5, 0];
-  const [[a, b, c, d, e]] = useState(() => [...Array(5)].map(createRef));
+  const [[a, b, c, d, e, z]] = useState(() => [...Array(6)].map(createRef));
   // const [pos, setpos] = useState(data)
   // useEffect(() => {
   //     setpos(data);
   //   }, [pos]);
+  const list = props.list;
   const pos = useStore((state) => state.pos);
   const bears = Store((state) => state.bears);
-  const increasePopulation = Store(
-    (state) => state.increasePopulation,
-    console.log(bears)
-  );
+  // const increasePopulation = Store(
+  //   (state) => state.increasePopulation,
+  //   console.log(bears)
+  // );
 
   return (
     <Container
@@ -112,13 +113,15 @@ const Scene = () => {
     >
       {/* <Button onClick = { increasePopulation}/>
         <h1>{pos} </h1> */}
+      {list.map((item, index) => (
+        <div key={index}>{item}</div>
+      ))}
       <Canvas orthographic camera={{ zoom: 80 }} dpr={[1, 2]}>
         <Suspense fallback={null}>
           <Nodes dashed color="#ff1050" lineWidth={1}>
             <Node ref={a} name="a" position={[-2, 2.5, 0]} connectedTo={[b]} />
             <Node ref={b} name="b" position={[0, 1, 0]} connectedTo={[c]} />
             <Node ref={c} name="c" position={bears} connectedTo={[d]} />
-            {/* <div>{bears}</div> */}
             <Node ref={d} name="d" position={[2, 0.5, 0]} connectedTo={[e]} />
             <Node ref={e} name="e" position={[-0.5, -1, 0]} />
           </Nodes>
