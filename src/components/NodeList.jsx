@@ -4,6 +4,8 @@ import * as THREE from "three";
 const initialList = {};
 const alphabets = "abcdefghijklmnopqrstuvwxyz";
 let current = 0;
+let editing = null;
+
 const NodeList = () => {
   const [value, setValue] = React.useState("");
   const [list, setList] = React.useState(initialList);
@@ -15,12 +17,17 @@ const NodeList = () => {
   useEffect(() => console.log(list), [list]);
 
   const handleSubmit = (event) => {
-    if (value) {
-      setValue(event.target.value);
-      setList({ ...list, [alphabets[current]]: value.split(",") });
+    if (!editing) {
+      if (value) {
+        setValue(event.target.value);
+        setList({ ...list, [alphabets[current]]: value.split(",") });
+      }
+      current++;
+    } else {
+      setList({ ...list, [editing]: value.split(",") });
+      editing = null;
     }
     setValue("");
-    current++;
     event.preventDefault();
   };
 
@@ -30,7 +37,10 @@ const NodeList = () => {
     setList(newList);
   };
 
-  const editItem = (item) => {};
+  const editItem = (item) => {
+    editing = item;
+    setValue(list[item].join(","));
+  };
 
   //Catmull-Rom spline Creation
   const CurveCreate = () => {
@@ -279,11 +289,7 @@ const NodeList = () => {
       <h1>Node List</h1>
       <ul>
         {Object.keys(list).map((item, index) => (
-          <li
-            style={listStyle}
-            onClick={() => handleRemoveItem(item)}
-            key={index}
-          >
+          <li style={listStyle} onClick={() => handleRemoveItem(item)} key={index}>
             {list[item].join(",")}
           </li>
         ))}
