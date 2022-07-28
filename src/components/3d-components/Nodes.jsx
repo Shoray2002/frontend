@@ -13,8 +13,10 @@ import { useFrame, useThree, applyProps } from "@react-three/fiber";
 import { Line, Text } from "@react-three/drei";
 import { useDrag } from "@use-gesture/react";
 import without from "lodash-es/without";
+import { get } from "lodash-es";
 // import zustand from "zustand";
-
+let list;
+let currNode = null;
 const removeZ = new THREE.Vector3(1, 1, 1);
 const temp = new THREE.Vector3();
 const context = createContext();
@@ -29,8 +31,8 @@ function Dot(props) {
 }
 
 function Nodes({ children, ...props }) {
-  console.log(children);
   const [nodes, set] = useState([]);
+  list = props.list;
   const lines = useMemo(() => {
     const lines = [];
     for (let node of nodes) {
@@ -93,36 +95,39 @@ const Node = forwardRef(
       // Unregister on unmount
       return () => void set((nodes) => without(nodes, state));
     }, [state, pos]);
-
     // Drag n drop, hover
-    const [hovered, setHovered] = useState(false);
-    useEffect(
-      () => void (document.body.style.cursor = hovered ? "grab" : "auto"),
-      [hovered]
-    );
+    const [hovered, setHovered] = useState([false, 0]);
+    useEffect(() => {
+      document.body.style.cursor = hovered[0] ? "grab" : "auto";
+      console.log(hovered);
+    }, [hovered]);
     const bind = useDrag(({ down, xy: [x, y] }) => {
       document.body.style.cursor = down ? "grabbing" : "grab";
-      console.log(down, x, y);  
       const unprojectedPoint = temp
-        .set((x / 1000) - 1, -(y / 1000) + 1, 0)
+        .set(x / 1000 - 1, -(y / 1000) + 1, 0)
         .unproject(camera)
         .multiply(removeZ)
         .clone();
+      // console.log(down, x, y);
+      // console.log(unprojectedPoint);
+      list.forEach((item) => {
+        console.log(item);
+      });
       setPos(unprojectedPoint);
-      console.log(hovered);
     });
 
     return (
       <mesh
         ref={ref}
+        name={name}
         {...bind()}
-        onPointerOver={() => setHovered(true)}
-        onPointerOut={() => setHovered(false)}
+        onPointerOver={() => setHovered([true, name])}
+        onPointerOut={() => setHovered([false, 0])}
         position={pos}
         {...props}
       >
         <boxBufferGeometry args={[0.5, 0.5, 0.5]} />
-        <meshBasicMaterial color={hovered ? "#ff1050" : "black"} />
+        <meshBasicMaterial color={hovered[0] ? "#ff1050" : "black"} />
         <Text position={[0, 0, 0.3]} fontSize={0.25}>
           {name}
         </Text>

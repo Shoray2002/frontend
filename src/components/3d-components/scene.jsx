@@ -6,16 +6,7 @@ import React, {
   useState,
   useEffect,
 } from "react";
-import { Canvas, useFrame, transientUpdate } from "@react-three/fiber";
-// import {
-//   Html,
-//   Mask,
-//   useMask,
-//   OrthographicCamera,
-//   Clone,
-//   Float as FloatImpl,
-// } from "@react-three/drei";
-// import { OrbitControls } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
 import { Nodes, Node } from "./Nodes";
 
 import { Container } from "react-bootstrap";
@@ -90,13 +81,41 @@ const useStore = create((set) => ({
 
 const Scene = (props) => {
   let data = [1, 0.5, 0];
-  const [[a, b, c, d, e, z]] = useState(() => [...Array(6)].map(createRef));
+  const [
+    [
+      a,
+      b,
+      c,
+      d,
+      e,
+      f,
+      g,
+      h,
+      i,
+      j,
+      k,
+      l,
+      m,
+      n,
+      o,
+      p,
+      q,
+      r,
+      s,
+      t,
+      u,
+      v,
+      w,
+      x,
+      y,
+      z,
+    ],
+  ] = useState(() => [...Array(26)].map(createRef));
   // const [pos, setpos] = useState(data)
   // useEffect(() => {
   //     setpos(data);
   //   }, [pos]);
   const list = props.list;
-  console.log(list);
   const pos = useStore((state) => state.pos);
   const bears = Store((state) => state.bears);
   // const increasePopulation = Store(
@@ -115,26 +134,24 @@ const Scene = (props) => {
       {/* <Button onClick = { increasePopulation}/>
         <h1>{pos} </h1> */}
 
-      <Canvas orthographic camera={{ zoom: 80 }} dpr={[1, 2]}>
+      <Canvas orthographic camera={{ zoom: 100 }} dpr={[1, 2]}>
         <Suspense fallback={null}>
-          <Nodes dashed color="#ff1050" lineWidth={1}>
+          <Nodes dashed color="#ff1050" lineWidth={2} list={list}>
+            <Node ref={b} name="b" position={[0, 1, 0]} connectedTo={[c]} />
+            <Node ref={c} name="c" position={bears} connectedTo={[d]} />
+            <Node ref={d} name="d" position={[2, 0.5, 0]} connectedTo={[e]} />
+            <Node ref={e} name="e" position={[-0.5, -1, 0]} />
             {list.map((item, index) => (
               <Node
                 key={index}
-                ref={index % 2 ? a : z}
+                ref={a}
                 name="a"
                 position={item}
                 connectedTo={[c]}
               />
             ))}
-            {/* <Node ref={a} name="a" position={[-2, 2.5, 0]} connectedTo={[b]} /> */}
-            <Node ref={b} name="b" position={[0, 1, 0]} connectedTo={[c]} />
-            <Node ref={c} name="c" position={bears} connectedTo={[d]} />
-            <Node ref={d} name="d" position={[2, 0.5, 0]} connectedTo={[e]} />
-            <Node ref={e} name="e" position={[-0.5, -1, 0]} />
           </Nodes>
         </Suspense>
-        {/* <OrbitControls/>  */}
       </Canvas>
     </Container>
   );
