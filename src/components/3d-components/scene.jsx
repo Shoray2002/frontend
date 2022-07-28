@@ -141,12 +141,12 @@ const Scene = (props) => {
             <Node ref={c} name="c" position={bears} connectedTo={[d]} />
             <Node ref={d} name="d" position={[2, 0.5, 0]} connectedTo={[e]} />
             <Node ref={e} name="e" position={[-0.5, -1, 0]} />
-            {list.map((item, index) => (
+            {Object.keys(list).map((item, index) => (
               <Node
                 key={index}
                 ref={a}
-                name="a"
-                position={item}
+                name={item}
+                position={list[item]}
                 connectedTo={[c]}
               />
             ))}

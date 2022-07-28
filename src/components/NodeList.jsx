@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import Scene from "./3d-components/scene.jsx";
 import * as THREE from "three";
-const initialList = [];
-
+const initialList = {};
+const alphabets = "abcdefghijklmnopqrstuvwxyz";
+let current = 0;
 const NodeList = () => {
   const [value, setValue] = React.useState("");
   const [list, setList] = React.useState(initialList);
@@ -14,18 +15,18 @@ const NodeList = () => {
   useEffect(() => console.log(list), [list]);
   const handleSubmit = (event) => {
     if (value) {
-      setList([...list, value.split(",")]);
-      // setList(list.concat(value));
+      setList({ ...list, [alphabets[current]]: value.split(",") });
     }
-
+    console.log(list);
     setValue("");
+    current++;
     event.preventDefault();
   };
 
-  const handleRemoveItem = (index) => {
-    const filteredArray = list.filter((item) => list.indexOf(item) !== index);
-    console.log(index);
-    setList(filteredArray);
+  const handleRemoveItem = (item) => {
+    const newList = { ...list };
+    delete newList[item];
+    setList(newList);
   };
 
   //Catmull-Rom spline Creation
@@ -274,10 +275,10 @@ const NodeList = () => {
     <div>
       <h1>Node List</h1>
       <ul>
-        {list.map((item, index) => (
+        {Object.keys(list).map((item, index) => (
           <li
             style={listStyle}
-            onClick={() => handleRemoveItem(index)}
+            onClick={() => handleRemoveItem(item)}
             key={index}
           >
             {item}

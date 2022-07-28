@@ -110,8 +110,14 @@ const Node = forwardRef(
         .clone();
       // console.log(down, x, y);
       // console.log(unprojectedPoint);
-      list.forEach((item) => {
-        console.log(item);
+      Object.keys(list).forEach((key) => {
+        if (key === name) {
+          list[key] = [
+            unprojectedPoint.x,
+            unprojectedPoint.y,
+            unprojectedPoint.z,
+          ];
+        }
       });
       setPos(unprojectedPoint);
     });
