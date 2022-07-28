@@ -96,6 +96,7 @@ const Scene = (props) => {
   //     setpos(data);
   //   }, [pos]);
   const list = props.list;
+  console.log(list);
   const pos = useStore((state) => state.pos);
   const bears = Store((state) => state.bears);
   // const increasePopulation = Store(
@@ -113,13 +114,20 @@ const Scene = (props) => {
     >
       {/* <Button onClick = { increasePopulation}/>
         <h1>{pos} </h1> */}
-      {list.map((item, index) => (
-        <div key={index}>{item}</div>
-      ))}
+
       <Canvas orthographic camera={{ zoom: 80 }} dpr={[1, 2]}>
         <Suspense fallback={null}>
           <Nodes dashed color="#ff1050" lineWidth={1}>
-            <Node ref={a} name="a" position={[-2, 2.5, 0]} connectedTo={[b]} />
+            {list.map((item, index) => (
+              <Node
+                key={index}
+                ref={index % 2 ? a : z}
+                name="a"
+                position={item}
+                connectedTo={[c]}
+              />
+            ))}
+            {/* <Node ref={a} name="a" position={[-2, 2.5, 0]} connectedTo={[b]} /> */}
             <Node ref={b} name="b" position={[0, 1, 0]} connectedTo={[c]} />
             <Node ref={c} name="c" position={bears} connectedTo={[d]} />
             <Node ref={d} name="d" position={[2, 0.5, 0]} connectedTo={[e]} />

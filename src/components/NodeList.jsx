@@ -14,7 +14,8 @@ const NodeList = () => {
   useEffect(() => console.log(list), [list]);
   const handleSubmit = (event) => {
     if (value) {
-      setList(list.concat(value));
+      setList([...list, value.split(",")]);
+      // setList(list.concat(value));
     }
 
     setValue("");

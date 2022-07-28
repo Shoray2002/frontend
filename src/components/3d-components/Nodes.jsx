@@ -29,6 +29,7 @@ function Dot(props) {
 }
 
 function Nodes({ children, ...props }) {
+  console.log(children);
   const [nodes, set] = useState([]);
   const lines = useMemo(() => {
     const lines = [];
