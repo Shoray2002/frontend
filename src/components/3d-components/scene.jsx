@@ -137,18 +137,12 @@ const Scene = (props) => {
       <Canvas orthographic camera={{ zoom: 100 }} dpr={[1, 2]}>
         <Suspense fallback={null}>
           <Nodes dashed color="#ff1050" lineWidth={2} list={list}>
-            <Node ref={b} name="b" position={[0, 1, 0]} connectedTo={[c]} />
+            {/* <Node ref={b} name="b" position={[0, 1, 0]} connectedTo={[c]} />
             <Node ref={c} name="c" position={bears} connectedTo={[d]} />
             <Node ref={d} name="d" position={[2, 0.5, 0]} connectedTo={[e]} />
-            <Node ref={e} name="e" position={[-0.5, -1, 0]} />
+            <Node ref={e} name="e" position={[-0.5, -1, 0]} /> */}
             {Object.keys(list).map((item, index) => (
-              <Node
-                key={index}
-                ref={a}
-                name={item}
-                position={list[item]}
-                connectedTo={[c]}
-              />
+              <Node key={index} ref={a} name={item} position={list[item]} />
             ))}
           </Nodes>
         </Suspense>

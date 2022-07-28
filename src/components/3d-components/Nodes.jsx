@@ -99,7 +99,6 @@ const Node = forwardRef(
     const [hovered, setHovered] = useState([false, 0]);
     useEffect(() => {
       document.body.style.cursor = hovered[0] ? "grab" : "auto";
-      console.log(hovered);
     }, [hovered]);
     const bind = useDrag(({ down, xy: [x, y] }) => {
       document.body.style.cursor = down ? "grabbing" : "grab";
@@ -108,18 +107,17 @@ const Node = forwardRef(
         .unproject(camera)
         .multiply(removeZ)
         .clone();
-      // console.log(down, x, y);
-      // console.log(unprojectedPoint);
       Object.keys(list).forEach((key) => {
         if (key === name) {
           list[key] = [
-            unprojectedPoint.x,
-            unprojectedPoint.y,
-            unprojectedPoint.z,
+            Math.round(unprojectedPoint.x),
+            Math.round(unprojectedPoint.y),
+            0,
           ];
         }
       });
       setPos(unprojectedPoint);
+      set((nodes) => [...nodes, state]);
     });
 
     return (

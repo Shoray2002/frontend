@@ -13,11 +13,12 @@ const NodeList = () => {
   };
 
   useEffect(() => console.log(list), [list]);
+
   const handleSubmit = (event) => {
     if (value) {
+      setValue(event.target.value);
       setList({ ...list, [alphabets[current]]: value.split(",") });
     }
-    console.log(list);
     setValue("");
     current++;
     event.preventDefault();
@@ -28,6 +29,8 @@ const NodeList = () => {
     delete newList[item];
     setList(newList);
   };
+
+  const editItem = (item) => {};
 
   //Catmull-Rom spline Creation
   const CurveCreate = () => {
@@ -281,7 +284,7 @@ const NodeList = () => {
             onClick={() => handleRemoveItem(item)}
             key={index}
           >
-            {item}
+            {list[item].join(",")}
           </li>
         ))}
       </ul>
